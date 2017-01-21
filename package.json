@@ -1,0 +1,27 @@
+{
+  "name": "node-testing-server",
+  "version": "0.1.0",
+  "description": "Simple node.js server to generate HTML pages for testing",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marketionist/node-testing-server.git"
+  },
+  "keywords": [
+    "server",
+    "node server",
+    "testing server",
+    "node.js server",
+    "node server testing",
+    "simple node server",
+    "server for testing",
+    "server for tests",
+    "lightweight server"
+  ],
+  "author": "Dmytro Shpakovskyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Marketionist/node-testing-server/issues"
+  },
+  "homepage": "https://github.com/Marketionist/node-testing-server#readme"
+}
