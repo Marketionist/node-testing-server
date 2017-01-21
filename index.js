@@ -12,7 +12,7 @@ let path = require('path');
 
 let packageName = '[node-testing-server]';
 
-exports.nodeTestingServer = {
+let nodeTestingServer = {
     // Config default options
     config: {
         hostname: 'localhost',
@@ -95,3 +95,5 @@ exports.nodeTestingServer = {
     }
 
 };
+
+exports.nodeTestingServer = nodeTestingServer;
