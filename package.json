@@ -1,6 +1,6 @@
 {
   "name": "node-testing-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple node.js server to generate HTML pages for testing",
   "main": "index.js",
   "repository": {
