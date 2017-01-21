@@ -12,7 +12,7 @@ let path = require('path');
 
 let packageName = '[node-testing-server]';
 
-let nodeTestingServer = {
+exports.nodeTestingServer = {
     // Config default options
     config: {
         hostname: 'localhost',
@@ -81,17 +81,17 @@ let nodeTestingServer = {
     }),
 
     start(port, hostname) {
-        return this.server.listen(port, hostname, function () {
-            return console.log(`${packageName}: Server running at http://${hostname}:${port}/`);
-        });
+        return this.server.listen(port, hostname)
+            .on('listening', () => console.log(`${packageName}: Server running
+                at http://${hostname}:${port}/`))
+            .on('error', (err) => console.log('Error starting server:', err));
     },
 
-    stop(port, hostname) {
-        return this.server.close(function () {
-            return console.log(`${packageName}: Server stopped at http://${hostname}:${port}/`);
-        });
+    stop() {
+        return this.server.close()
+            .on('close', () => console.log(`Server stopped at
+                http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
+            .on('error', (err) => console.log('Error stopping server:', err));
     }
 
 };
-
-exports.nodeTestingServer = nodeTestingServer;
