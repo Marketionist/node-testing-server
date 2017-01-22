@@ -34,8 +34,6 @@ let nodeTestingServer = {
         }
 
         if (req.method === 'GET') {
-            let fileURL;
-
             if (req.url === '/') {
                 let mainPagePath = path.resolve('public/index.html');
 
@@ -48,21 +46,15 @@ let nodeTestingServer = {
                 fs.createReadStream(mainPagePath).pipe(res);
 
                 return;
-            } else {
-                fileURL = req.url;
             }
 
+            let fileURL = req.url;
             let filePath = path.resolve(`public/${fileURL}`);
             let fileExtension = path.extname(filePath);
 
-            // If logs are enabled in nodeTestingServer.config.logsEnabled
-            if (nodeTestingServer.config.logsEnabled) {
-                console.log(packageName, `Serving ${filePath} from the server to the client`);
-            }
-
             if (fileExtension === '.html') {
                 fs.exists(filePath, (exists) => {
-                    // If requested page cannot be found in public folder,
+                    // If requested page cannot be found in public/ folder,
                     // then it will be generated from nodeTestingServer.config.pages
                     if (!exists) {
                         if (nodeTestingServer.config.logsEnabled) {
@@ -72,10 +64,15 @@ let nodeTestingServer = {
                         res.end(nodeTestingServer.config.pages[fileURL]);
 
                         return;
-                    } else {
-                        res.writeHead(status200, { 'Content-Type': 'text/html' });
-                        fs.createReadStream(filePath).pipe(res);
                     }
+                    // If logs are enabled in nodeTestingServer.config.logsEnabled
+                    if (nodeTestingServer.config.logsEnabled) {
+                        console.log(packageName, `Serving ${filePath} from the server to the client`);
+                    }
+                    res.writeHead(status200, { 'Content-Type': 'text/html' });
+                    fs.createReadStream(filePath).pipe(res);
+
+                    return;
                 });
             } else {
                 res.writeHead(status404, { 'Content-Type': 'text/html' });
@@ -87,10 +84,11 @@ let nodeTestingServer = {
         }
     }),
 
-    start(port, hostname) {
-        return this.server.listen(port, hostname)
+    start() {
+        return this.server.listen(nodeTestingServer.config.port, nodeTestingServer.config.hostname)
             .on('listening', () => console.log(
-                packageName, `Server running at http://${hostname}:${port}/`))
+                packageName,
+                `Server running at http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
             .on('error', (err) => console.log('Error starting server:', err));
     },
 
