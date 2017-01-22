@@ -31,7 +31,7 @@ describe('node-testing-server tests', () => {
         console.log(`==> With argv: ${process.argv}`);
 
         // Start node testing server
-        nodeTestingServer.start(nodeTestingServer.config.port, nodeTestingServer.config.hostname);
+        nodeTestingServer.start();
     });
 
     afterAll(() => {
