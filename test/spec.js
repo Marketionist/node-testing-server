@@ -4,7 +4,7 @@ let nodeTestingServer = require('../index.js').nodeTestingServer;
 nodeTestingServer.config = {
     hostname: 'localhost',
     port: 3001,
-    logsEnabled: true,
+    logsEnabled: 2,
     pages: {
         '/test.html': `<ul class="items">
                         <li>First</li>

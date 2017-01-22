@@ -17,7 +17,7 @@ let nodeTestingServer = {
     config: {
         hostname: 'localhost',
         port: 3001,
-        logsEnabled: false,
+        logsEnabled: 0,
         pages: {}
     },
 
@@ -25,25 +25,31 @@ let nodeTestingServer = {
         let status200 = 200;
         let status404 = 404;
 
-        // If logs are enabled in nodeTestingServer.config.logsEnabled
-        if (nodeTestingServer.config.logsEnabled) {
+        // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+        if (nodeTestingServer.config.logsEnabled >= 1) {
+            // Print incoming request METHOD, URL and outcoming response CODE
+            console.log(`${req.method} ${req.url} ${res.statusCode}`);
+        }
+        if (nodeTestingServer.config.logsEnabled === 2) {
             // Print incoming request headers
-            console.log(req.headers);
-            // Print incoming request URL and METHOD
-            console.log(`Request for ${req.url} by method ${req.method}`);
+            console.log('\nRequest headers:\n', req.headers, '\n');
+            // Start counting response time
+            console.time('Response time');
         }
 
         if (req.method === 'GET') {
             if (req.url === '/') {
                 let mainPagePath = path.resolve('public/index.html');
 
-                // If logs are enabled in nodeTestingServer.config.logsEnabled
-                if (nodeTestingServer.config.logsEnabled) {
-                    console.log(packageName, `Serving ${mainPagePath} from the server to the client`);
-                }
-
                 res.writeHead(status200, { 'Content-Type': 'text/html' });
                 fs.createReadStream(mainPagePath).pipe(res);
+                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                if (nodeTestingServer.config.logsEnabled >= 1) {
+                    console.log(packageName, `Served ${mainPagePath} from the server to the client`);
+                }
+                if (nodeTestingServer.config.logsEnabled === 2) {
+                    console.timeEnd('Response time');
+                }
 
                 return;
             }
@@ -57,20 +63,27 @@ let nodeTestingServer = {
                     // If requested page cannot be found in public/ folder,
                     // then it will be generated from nodeTestingServer.config.pages
                     if (!exists) {
-                        if (nodeTestingServer.config.logsEnabled) {
-                            console.log(packageName, `Generating ${fileURL} from nodeTestingServer.config.pages`);
-                        }
                         res.writeHead(status200, { 'Content-Type': 'text/html' });
                         res.end(nodeTestingServer.config.pages[fileURL]);
+                        // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                        if (nodeTestingServer.config.logsEnabled >= 1) {
+                            console.log(packageName, `Generated ${fileURL} from nodeTestingServer.config.pages`);
+                        }
+                        if (nodeTestingServer.config.logsEnabled === 2) {
+                            console.timeEnd('Response time');
+                        }
 
                         return;
                     }
-                    // If logs are enabled in nodeTestingServer.config.logsEnabled
-                    if (nodeTestingServer.config.logsEnabled) {
-                        console.log(packageName, `Serving ${filePath} from the server to the client`);
-                    }
                     res.writeHead(status200, { 'Content-Type': 'text/html' });
                     fs.createReadStream(filePath).pipe(res);
+                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                    if (nodeTestingServer.config.logsEnabled >= 1) {
+                        console.log(packageName, `Served ${filePath} from the server to the client`);
+                    }
+                    if (nodeTestingServer.config.logsEnabled === 2) {
+                        console.timeEnd('Response time');
+                    }
 
                     return;
                 });
