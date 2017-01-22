@@ -10,7 +10,7 @@ let http = require('http');
 let fs = require('fs');
 let path = require('path');
 
-let packageName = '[node-testing-server]';
+let packageName = '[node-testing-server]:';
 
 let nodeTestingServer = {
     // Config default options
@@ -21,7 +21,7 @@ let nodeTestingServer = {
         pages: {}
     },
 
-    server: http.createServer(function (req, res) {
+    server: http.createServer((req, res) => {
         let status200 = 200;
         let status404 = 404;
 
@@ -39,8 +39,15 @@ let nodeTestingServer = {
             if (req.url === '/') {
                 let mainPagePath = path.resolve('public/index.html');
 
+                // If logs are enabled in nodeTestingServer.config.logsEnabled
+                if (nodeTestingServer.config.logsEnabled) {
+                    console.log(packageName, `Serving ${mainPagePath} from the server to the client`);
+                }
+
                 res.writeHead(status200, { 'Content-Type': 'text/html' });
                 fs.createReadStream(mainPagePath).pipe(res);
+
+                return;
             } else {
                 fileURL = req.url;
             }
@@ -50,16 +57,16 @@ let nodeTestingServer = {
 
             // If logs are enabled in nodeTestingServer.config.logsEnabled
             if (nodeTestingServer.config.logsEnabled) {
-                console.log(`${packageName}: Serving ${filePath} from the server to the client`);
+                console.log(packageName, `Serving ${filePath} from the server to the client`);
             }
 
             if (fileExtension === '.html') {
-                fs.exists(filePath, function (exists) {
+                fs.exists(filePath, (exists) => {
                     // If requested page cannot be found in public folder,
                     // then it will be generated from nodeTestingServer.config.pages
                     if (!exists) {
                         if (nodeTestingServer.config.logsEnabled) {
-                            console.log(`${packageName}: Generating ${fileURL} from nodeTestingServer.config.pages`);
+                            console.log(packageName, `Generating ${fileURL} from nodeTestingServer.config.pages`);
                         }
                         res.writeHead(status200, { 'Content-Type': 'text/html' });
                         res.end(nodeTestingServer.config.pages[fileURL]);
@@ -82,15 +89,16 @@ let nodeTestingServer = {
 
     start(port, hostname) {
         return this.server.listen(port, hostname)
-            .on('listening', () => console.log(`${packageName}: Server running
-                at http://${hostname}:${port}/`))
+            .on('listening', () => console.log(
+                packageName, `Server running at http://${hostname}:${port}/`))
             .on('error', (err) => console.log('Error starting server:', err));
     },
 
     stop() {
         return this.server.close()
-            .on('close', () => console.log(`Server stopped at
-                http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
+            .on('close', () => console.log(
+                packageName,
+                `Server stopped at http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
             .on('error', (err) => console.log('Error stopping server:', err));
     }
 
