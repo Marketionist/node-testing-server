@@ -20,7 +20,7 @@ You can require node-testing-server and configure it like this:
 ```javascript
 let nodeTestingServer = require('node-testing-server').nodeTestingServer;
 
-// Setting for node testing server
+// Settings for node testing server
 nodeTestingServer.config = {
     hostname: 'localhost',
     port: 3001,
@@ -47,11 +47,14 @@ Start and stop server like this:
 
 ```javascript
 // Start node testing server
-nodeTestingServer.start(nodeTestingServer.config.port, nodeTestingServer.config.hostname);
+nodeTestingServer.start();
 
 // Stop node testing server
 nodeTestingServer.stop();
 ```
+
+You can see the live example of node-testing-server usage with Protractor tests
+[here](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.js)
 
 ## Thanks
 If this script was helpful for you, please give it a **Star**
