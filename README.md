@@ -24,7 +24,7 @@ let nodeTestingServer = require('node-testing-server').nodeTestingServer;
 nodeTestingServer.config = {
     hostname: 'localhost',
     port: 3001,
-    logsEnabled: false,
+    logsEnabled: 0,
     pages: {
         '/test.html': `<ul class="items">
                         <li>First</li>
@@ -41,6 +41,12 @@ nodeTestingServer.config = {
     }
 }
 ```
+
+By default logs are disabled (`logsEnabled` is set to 0). You can set
+`logsEnabled` config to one of 3 levels:
+- 0 - logs disabled
+- 1 - partial logs are enabled
+- 2 - full logs are enabled
 
 ## Usage
 Start and stop server like this:
