@@ -1,5 +1,6 @@
 # node-testing-server
 
+[![Build Status](https://travis-ci.org/Marketionist/node-testing-server.svg?branch=master)](https://travis-ci.org/Marketionist/node-testing-server)
 [![npm version](https://img.shields.io/npm/v/node-testing-server.svg)](https://www.npmjs.com/package/node-testing-server)
 [![NPM License](https://img.shields.io/npm/l/node-testing-server.svg)](https://github.com/Marketionist/node-testing-server/blob/master/LICENSE)
 
@@ -45,7 +46,7 @@ nodeTestingServer.config = {
 Start and stop server like this:
 
 ```javascript
-// Start node test server
+// Start node testing server
 nodeTestingServer.start(nodeTestingServer.config.port, nodeTestingServer.config.hostname);
 
 // Stop node testing server

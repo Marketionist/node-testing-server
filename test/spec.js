@@ -4,7 +4,7 @@ let nodeTestingServer = require('../index.js').nodeTestingServer;
 nodeTestingServer.config = {
     hostname: 'localhost',
     port: 3001,
-    logsEnabled: false,
+    logsEnabled: true,
     pages: {
         '/test.html': `<ul class="items">
                         <li>First</li>
@@ -21,9 +21,9 @@ nodeTestingServer.config = {
     }
 }
 
-describe('node-testing-server tests', function () {
+describe('node-testing-server tests', () => {
 
-    beforeAll(function () {
+    beforeAll(() => {
         // Turn off Angular synchronization
         browser.ignoreSynchronization = true;
         // Output some information about current tests process
@@ -34,22 +34,23 @@ describe('node-testing-server tests', function () {
         nodeTestingServer.start(nodeTestingServer.config.port, nodeTestingServer.config.hostname);
     });
 
-    afterAll(function () {
+    afterAll(() => {
         // Stop node testing server
         nodeTestingServer.stop();
     });
 
-    it('should get the h1 text from the /index.html main test server page', function () {
-        browser.get(`http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`);
-        browser.sleep(10000);
+    it('should get the h1 text from the /index.html main test server page', () => {
         let titleMain = element(by.xpath('//h1[@class="title-main"]'));
+
+        browser.get(`http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`);
 
         expect(titleMain.getText()).toBe('Main page of node testing server');
     });
 
-    it('should get the first list item text from the /test.html server page', function () {
-        browser.get(`http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/test.html`);
+    it('should get the first list item text from the /test.html server page', () => {
         let listItemFirst = element.all(by.css('.items li')).first();
+
+        browser.get(`http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/test.html`);
 
         expect(listItemFirst.getText()).toBe('First');
     });
