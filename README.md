@@ -60,9 +60,9 @@ nodeTestingServer.stop();
 ```
 
 You can see the live example of node-testing-server usage with Protractor tests
-[here](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.js)
+[here](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.ts)
 
 ## Thanks
-If this script was helpful for you, please give it a **Star**
+If this script was helpful for you, please give it a **★ Star**
 on [github](https://github.com/Marketionist/node-testing-server) and
 [npm](https://www.npmjs.com/package/node-testing-server)
