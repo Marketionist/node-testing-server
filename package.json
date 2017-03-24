@@ -1,7 +1,7 @@
 {
   "name": "node-testing-server",
-  "version": "1.1.0",
-  "description": "Simple node.js server to generate HTML pages for testing",
+  "version": "1.1.1",
+  "description": "Simple node.js server to generate HTML pages for e2e testing",
   "main": "index.js",
   "scripts": {
     "postinstall": "webdriver-manager update",
@@ -17,6 +17,7 @@
     "node server",
     "testing server",
     "node.js server",
+    "e2e testing server",
     "node server testing",
     "simple node server",
     "server for testing",
@@ -30,7 +31,7 @@
   },
   "homepage": "https://github.com/Marketionist/node-testing-server#readme",
   "devDependencies": {
-    "eslint": "^3.14.0",
-    "protractor": "^5.0.0"
+    "eslint": "^3.17.1",
+    "protractor": "^5.1.1"
   }
 }
