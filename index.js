@@ -6,11 +6,11 @@
 
 // #############################################################################
 
-let http = require('http');
-let fs = require('fs');
-let path = require('path');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
-let packageName = '[node-testing-server]:';
+const packageName = '[node-testing-server]:';
 
 let nodeTestingServer = {
     // Config default options
@@ -22,8 +22,8 @@ let nodeTestingServer = {
     },
 
     server: http.createServer((req, res) => {
-        let status200 = 200;
-        let status404 = 404;
+        const status200 = 200;
+        const status404 = 404;
 
         // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
         if (nodeTestingServer.config.logsEnabled >= 1) {
