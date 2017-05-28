@@ -8,6 +8,18 @@ exports.config = {
     ],
 
     capabilities: {
-        browserName: 'chrome'
+        browserName: 'chrome',
+        chromeOptions: {
+            args: [
+                // Disable "Chrome is being controlled by automated test software" infobar
+                '--disable-infobars'
+            ],
+            prefs: {
+                // Disable Chrome's annoying password manager
+                'profile.password_manager_enabled': false,
+                'credentials_enable_service': false,
+                'password_manager_enabled': false
+            }
+        }
     }
 };
