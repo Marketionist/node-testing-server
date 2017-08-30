@@ -1,6 +1,6 @@
 {
   "name": "node-testing-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Simple node.js server to generate HTML pages for e2e testing",
   "main": "index.js",
   "scripts": {
