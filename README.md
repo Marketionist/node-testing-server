@@ -11,6 +11,7 @@ Simple node.js server to generate HTML pages for testing
 - 6.x
 - 7.x
 - 8.x
+- 9.x
 
 ## Installation
 `npm install node-testing-server --save-dev`
@@ -65,5 +66,4 @@ You can see the live example of node-testing-server usage with Protractor tests
 
 ## Thanks
 If this script was helpful for you, please give it a **★ Star**
-on [github](https://github.com/Marketionist/node-testing-server) and
-[npm](https://www.npmjs.com/package/node-testing-server)
+on [github](https://github.com/Marketionist/node-testing-server)
