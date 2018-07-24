@@ -12,6 +12,7 @@ Simple node.js server to generate HTML pages for testing
 - 7.x
 - 8.x
 - 9.x
+- 10.x
 
 ## Installation
 `npm install node-testing-server --save-dev`
