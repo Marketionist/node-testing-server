@@ -27,8 +27,8 @@ let nodeTestingServer = {
 
         // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
         if (nodeTestingServer.config.logsEnabled >= 1) {
-            // Print incoming request METHOD, URL and outcoming response CODE
-            console.log(`${req.method} ${req.url} ${res.statusCode}`);
+            // Print incoming request METHOD, URL
+            console.log(`Request: ${req.method} ${req.url}`);
         }
         if (nodeTestingServer.config.logsEnabled === 2) {
             // Print incoming request headers
@@ -51,6 +51,12 @@ let nodeTestingServer = {
                     console.timeEnd('Response time');
                 }
 
+                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                if (nodeTestingServer.config.logsEnabled >= 1) {
+                    // Print outcoming response CODE
+                    console.log(`Response: ${res.statusCode}`);
+                }
+
                 return;
             }
 
@@ -60,17 +66,28 @@ let nodeTestingServer = {
 
             if (fileExtension === '.html') {
                 fs.exists(filePath, (exists) => {
-                    // If requested page cannot be found in public/ folder,
-                    // then it will be generated from nodeTestingServer.config.pages
                     if (!exists) {
-                        res.writeHead(status200, { 'Content-Type': 'text/html' });
-                        res.end(nodeTestingServer.config.pages[fileURL]);
+                        if (typeof nodeTestingServer.config.pages[fileURL] === 'undefined') {
+                            res.writeHead(status404, { 'Content-Type': 'text/html' });
+                            res.end(`<h1>Error 404: ${fileURL} is not set in nodeTestingServer.config.pages</h1>`);
+                        } else {
+                            // If requested page cannot be found in public/ folder,
+                            // then it will be generated from nodeTestingServer.config.pages
+                            res.writeHead(status200, { 'Content-Type': 'text/html' });
+                            res.end(nodeTestingServer.config.pages[fileURL]);
+                            // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                            if (nodeTestingServer.config.logsEnabled >= 1) {
+                                console.log(packageName, `Generated ${fileURL} from nodeTestingServer.config.pages`);
+                            }
+                            if (nodeTestingServer.config.logsEnabled === 2) {
+                                console.timeEnd('Response time');
+                            }
+                        }
+
                         // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                         if (nodeTestingServer.config.logsEnabled >= 1) {
-                            console.log(packageName, `Generated ${fileURL} from nodeTestingServer.config.pages`);
-                        }
-                        if (nodeTestingServer.config.logsEnabled === 2) {
-                            console.timeEnd('Response time');
+                            // Print outcoming response CODE
+                            console.log(`Response: ${res.statusCode}`);
                         }
 
                         return;
@@ -79,6 +96,8 @@ let nodeTestingServer = {
                     fs.createReadStream(filePath).pipe(res);
                     // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                     if (nodeTestingServer.config.logsEnabled >= 1) {
+                        // Print outcoming response CODE
+                        console.log(`Response: ${res.statusCode}`);
                         console.log(packageName, `Served ${filePath} from the server to the client`);
                     }
                     if (nodeTestingServer.config.logsEnabled === 2) {
@@ -90,10 +109,22 @@ let nodeTestingServer = {
             } else {
                 res.writeHead(status404, { 'Content-Type': 'text/html' });
                 res.end(`<h1>Error 404: ${fileURL} is not an HTML file</h1>`);
+
+                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                if (nodeTestingServer.config.logsEnabled >= 1) {
+                    // Print outcoming response CODE
+                    console.log(`Response: ${res.statusCode}`);
+                }
             }
         } else {
             res.writeHead(status404, { 'Content-Type': 'text/html' });
             res.end(`<h1>Error 404: ${req.method} is not supported</h1>`);
+
+            // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+            if (nodeTestingServer.config.logsEnabled >= 1) {
+                // Print outcoming response CODE
+                console.log(`Response: ${res.statusCode}`);
+            }
         }
     }),
 
