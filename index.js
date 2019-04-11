@@ -63,8 +63,50 @@ let nodeTestingServer = {
             let fileURL = req.url;
             let filePath = path.resolve(`public/${fileURL}`);
             let fileExtension = path.extname(filePath);
+            // All supported file extensions
+            const supportedFileExtensions = [
+                '.html',
+                '.json',
+                '.js',
+                '.css',
+                '.jpg',
+                '.png'
+            ];
+            // Set initial Content-Type
+            let contentType;
 
-            if (fileExtension === '.html') {
+            // Check fileExtension and set corresponding Content-Type
+            switch (fileExtension) {
+                case '.json':
+                    contentType = 'application/json';
+                    break;
+                case '.js':
+                    contentType = 'text/javascript';
+                    break;
+                case '.css':
+                    contentType = 'text/css';
+                    break;
+                case '.jpg':
+                    contentType = 'image/jpg';
+                    break;
+                case '.png':
+                    contentType = 'image/png';
+                    break;
+                default:
+                    contentType = 'text/html';
+            }
+
+            if (supportedFileExtensions.indexOf(fileExtension) === -1) {
+                res.writeHead(status404, { 'Content-Type': 'text/html' });
+                res.end(`<h1>Error 404: ${fileExtension} is not among supported file formats:
+                    ${supportedFileExtensions.join(', ')}</h1>`);
+
+                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                if (nodeTestingServer.config.logsEnabled >= 1) {
+                    // Print outcoming response CODE
+                    console.log(`Response: ${res.statusCode}`);
+                }
+            } else {
                 fs.exists(filePath, (exists) => {
                     if (!exists) {
                         if (typeof nodeTestingServer.config.pages[fileURL] === 'undefined') {
@@ -73,7 +115,7 @@ let nodeTestingServer = {
                         } else {
                             // If requested page cannot be found in public/ folder,
                             // then it will be generated from nodeTestingServer.config.pages
-                            res.writeHead(status200, { 'Content-Type': 'text/html' });
+                            res.writeHead(status200, { 'Content-Type': contentType });
                             res.end(nodeTestingServer.config.pages[fileURL]);
                             // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                             if (nodeTestingServer.config.logsEnabled >= 1) {
@@ -92,7 +134,7 @@ let nodeTestingServer = {
 
                         return;
                     }
-                    res.writeHead(status200, { 'Content-Type': 'text/html' });
+                    res.writeHead(status200, { 'Content-Type': contentType });
                     fs.createReadStream(filePath).pipe(res);
                     // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                     if (nodeTestingServer.config.logsEnabled >= 1) {
@@ -106,15 +148,6 @@ let nodeTestingServer = {
 
                     return;
                 });
-            } else {
-                res.writeHead(status404, { 'Content-Type': 'text/html' });
-                res.end(`<h1>Error 404: ${fileURL} is not an HTML file</h1>`);
-
-                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                if (nodeTestingServer.config.logsEnabled >= 1) {
-                    // Print outcoming response CODE
-                    console.log(`Response: ${res.statusCode}`);
-                }
             }
         } else {
             res.writeHead(status404, { 'Content-Type': 'text/html' });
