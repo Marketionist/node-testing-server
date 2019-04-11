@@ -27,6 +27,7 @@ before_install:
 
 install:
   - npm install
+  - npm run webdriver-update
 
 before_script:
   - npm run lint
