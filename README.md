@@ -48,6 +48,15 @@ nodeTestingServer.config = {
 
 By default logs are disabled (`logsEnabled` is set to 0). You can set
 `logsEnabled` config to one of 3 levels:
+- 0 - logs disabled
+- 1 - partial logs are enabled - prints out:
+  * incoming request METHOD, URL and outcoming response CODE
+  * pages that were generated or served
+- 2 - full logs are enabled - prints out:
+  * incoming request METHOD, URL and outcoming response CODE
+  * pages that were generated or served
+  * incoming request headers
+  * response time
 
 ## Usage
 Start and stop server like this:
