@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/node-testing-server.svg)](https://www.npmjs.com/package/node-testing-server)
 [![NPM License](https://img.shields.io/npm/l/node-testing-server.svg)](https://github.com/Marketionist/node-testing-server/blob/master/LICENSE)
 
-Simple node.js server to generate HTML pages for testing
+Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for end-to-end and API testing
 
 ## Supported versions
 [Node.js](http://nodejs.org/):
@@ -13,6 +13,7 @@ Simple node.js server to generate HTML pages for testing
 - 8.x
 - 9.x
 - 10.x
+- 11.x
 
 ## Installation
 `npm install node-testing-server --save-dev`
@@ -48,8 +49,14 @@ nodeTestingServer.config = {
 By default logs are disabled (`logsEnabled` is set to 0). You can set
 `logsEnabled` config to one of 3 levels:
 - 0 - logs disabled
-- 1 - partial logs are enabled
-- 2 - full logs are enabled
+- 1 - partial logs are enabled - prints out:
+  * incoming request METHOD, URL and outcoming response CODE
+  * pages that were generated or served
+- 2 - full logs are enabled - prints out:
+  * incoming request METHOD, URL and outcoming response CODE
+  * pages that were generated or served
+  * incoming request headers
+  * response time
 
 ## Usage
 Start and stop server like this:
