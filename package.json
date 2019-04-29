@@ -1,7 +1,7 @@
 {
   "name": "node-testing-server",
   "version": "1.2.5",
-  "description": "Simple node.js server to generate HTML pages for e2e testing",
+  "description": "Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for end-to-end and API testing",
   "main": "index.js",
   "scripts": {
     "lint": "node_modules/.bin/eslint *.js test/**/*.js",
