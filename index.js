@@ -27,6 +27,7 @@ let nodeTestingServer = {
 
         // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
         if (nodeTestingServer.config.logsEnabled >= 1) {
+            console.log('========');
             // Print incoming request METHOD, URL
             console.log(`Request: ${req.method} ${req.url}`);
         }
@@ -55,6 +56,7 @@ let nodeTestingServer = {
                 if (nodeTestingServer.config.logsEnabled >= 1) {
                     // Print outcoming response CODE
                     console.log(`Response: ${res.statusCode}`);
+                    console.log('========');
                 }
 
                 return;
@@ -105,6 +107,7 @@ let nodeTestingServer = {
                 if (nodeTestingServer.config.logsEnabled >= 1) {
                     // Print outcoming response CODE
                     console.log(`Response: ${res.statusCode}`);
+                    console.log('========');
                 }
             } else {
                 fs.exists(filePath, (exists) => {
@@ -130,6 +133,7 @@ let nodeTestingServer = {
                         if (nodeTestingServer.config.logsEnabled >= 1) {
                             // Print outcoming response CODE
                             console.log(`Response: ${res.statusCode}`);
+                            console.log('========');
                         }
 
                         return;
@@ -141,6 +145,7 @@ let nodeTestingServer = {
                         // Print outcoming response CODE
                         console.log(`Response: ${res.statusCode}`);
                         console.log(packageName, `Served ${filePath} from the server to the client`);
+                        console.log('========');
                     }
                     if (nodeTestingServer.config.logsEnabled === 2) {
                         console.timeEnd('Response time');
@@ -157,6 +162,7 @@ let nodeTestingServer = {
             if (nodeTestingServer.config.logsEnabled >= 1) {
                 // Print outcoming response CODE
                 console.log(`Response: ${res.statusCode}`);
+                console.log('========');
             }
         }
     }),
