@@ -1,7 +1,7 @@
 {
   "name": "node-testing-server",
   "version": "1.3.0",
-  "description": "Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for end-to-end and API testing",
+  "description": "Simple Node.js server to generate .html, .json, .js, .css, .jpg, .png pages for end-to-end and API testing",
   "main": "index.js",
   "scripts": {
     "lint": "node_modules/.bin/eslint *.js test/**/*.js",
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/Marketionist/node-testing-server#readme",
   "devDependencies": {
-    "eslint": "^3.17.1",
-    "protractor": "^5.1.1"
+    "eslint": "^6.5.1",
+    "protractor": "^5.4.2"
   }
 }
