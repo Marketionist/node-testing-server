@@ -167,7 +167,7 @@ let nodeTestingServer = {
         }
     }),
 
-    start() {
+    start () {
         return this.server.listen(nodeTestingServer.config.port, nodeTestingServer.config.hostname)
             .on('listening', () => console.log(
                 packageName,
@@ -175,7 +175,7 @@ let nodeTestingServer = {
             .on('error', (err) => console.log('Error starting server:', err));
     },
 
-    stop() {
+    stop () {
         return this.server.close()
             .on('close', () => console.log(
                 packageName,

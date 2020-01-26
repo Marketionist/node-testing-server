@@ -14,11 +14,6 @@ node_js:
 # http://docs.travis-ci.com/user/gui-and-headless-browsers
 before_install:
  - export CHROME_BIN=/usr/bin/google-chrome
- # start xvbfb for e2e tests with screen resolution 1280x1024x16
- - "export DISPLAY=:99.0"
- - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
- # give xvfb some time to start
- - sleep 3
  - sudo apt-get update
  - sudo apt-get install -y libappindicator1 fonts-liberation
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -27,7 +22,6 @@ before_install:
 
 install:
   - npm install
-  - npm run webdriver-update
 
 before_script:
   - npm run lint
