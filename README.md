@@ -23,7 +23,7 @@ Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for 
 You can require node-testing-server and configure it like this:
 
 ```javascript
-let nodeTestingServer = require('node-testing-server').nodeTestingServer;
+let { nodeTestingServer } = require('node-testing-server');
 
 // Settings for node testing server
 nodeTestingServer.config = {
@@ -70,9 +70,10 @@ nodeTestingServer.start();
 nodeTestingServer.stop();
 ```
 
-You can see the live example of node-testing-server usage with Protractor tests
-[here](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.ts)
+You can see live examples of node-testing-server usage in
+[Protractor tests](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.ts)
+and in [TestCafe tests](https://github.com/Marketionist/testcafe-cucumber-steps/blob/master/tests/testing-server.js)
 
 ## Thanks
-If this script was helpful for you, please give it a **★ Star**
-on [github](https://github.com/Marketionist/node-testing-server)
+If this script was helpful to you, please give it a **★ Star**
+on [Github](https://github.com/Marketionist/node-testing-server)
