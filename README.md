@@ -15,6 +15,7 @@ Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for 
 - 10.x
 - 11.x
 - 12.x
+- 13.x
 
 ## Installation
 `npm install node-testing-server --save-dev`
