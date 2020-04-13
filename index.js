@@ -95,23 +95,27 @@ let nodeTestingServer = {
                     }
 
                     res.writeHead(status200, { 'Content-Type': 'text/html' });
-                    fs.createReadStream(mainPagePath).pipe(res);
-                    res.end();
-                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                    if (nodeTestingServer.config.logsEnabled >= 1) {
-                        console.log(packageName, `Served ${mainPagePath} from the server to the client`);
-                    }
-                    if (nodeTestingServer.config.logsEnabled === 2) {
-                        console.timeEnd('Response time');
-                    }
+                    fs.createReadStream(mainPagePath).pipe(res).on('finish', () => {
+                        res.end();
+                        // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                        if (nodeTestingServer.config.logsEnabled >= 1) {
+                            console.log(packageName, `Served ${mainPagePath} from the server to the client`);
+                        }
+                        if (nodeTestingServer.config.logsEnabled === 2) {
+                            console.timeEnd('Response time');
+                        }
 
-                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                    if (nodeTestingServer.config.logsEnabled >= 1) {
-                        // Print outcoming response CODE
-                        console.log(`Response: ${res.statusCode}`);
-                        console.log('========');
-                    }
+                        // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                        if (nodeTestingServer.config.logsEnabled >= 1) {
+                            // Print outcoming response CODE
+                            console.log(`Response: ${res.statusCode}`);
+                            console.log('========');
+                        }
 
+                        return;
+                    });
+
+                    return;
                 });
 
                 return;
@@ -194,18 +198,21 @@ let nodeTestingServer = {
                         return;
                     }
                     res.writeHead(status200, { 'Content-Type': contentType });
-                    fs.createReadStream(filePath).pipe(res);
-                    res.end();
-                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                    if (nodeTestingServer.config.logsEnabled >= 1) {
-                        // Print outcoming response CODE
-                        console.log(`Response: ${res.statusCode}`);
-                        console.log(packageName, `Served ${filePath} from the server to the client`);
-                        console.log('========');
-                    }
-                    if (nodeTestingServer.config.logsEnabled === 2) {
-                        console.timeEnd('Response time');
-                    }
+                    fs.createReadStream(filePath).pipe(res).on('finish', () => {
+                        res.end();
+                        // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                        if (nodeTestingServer.config.logsEnabled >= 1) {
+                            // Print outcoming response CODE
+                            console.log(`Response: ${res.statusCode}`);
+                            console.log(packageName, `Served ${filePath} from the server to the client`);
+                            console.log('========');
+                        }
+                        if (nodeTestingServer.config.logsEnabled === 2) {
+                            console.timeEnd('Response time');
+                        }
+
+                        return;
+                    });
 
                     return;
                 });
