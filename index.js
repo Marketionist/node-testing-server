@@ -111,11 +111,7 @@ let nodeTestingServer = {
                             console.log(`Response: ${res.statusCode}`);
                             console.log('========');
                         }
-
-                        return;
                     });
-
-                    return;
                 });
 
                 return;
@@ -210,8 +206,6 @@ let nodeTestingServer = {
                         if (nodeTestingServer.config.logsEnabled === 2) {
                             console.timeEnd('Response time');
                         }
-
-                        return;
                     });
 
                     return;
