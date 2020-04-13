@@ -38,26 +38,79 @@ let nodeTestingServer = {
             console.time('Response time');
         }
 
-        if (req.method === 'GET') {
+        if (req.method === 'POST') {
+            if (req.url === '/post') {
+                let chunks = [];
+
+                res.writeHead(status200, { 'Content-Type': 'application/json', 'Connection': 'close' });
+
+                req.on('data', (chunk) => {
+                    chunks.push(chunk);
+                });
+                req.on('end', () => {
+                    const data = Buffer.concat(chunks);
+
+                    res.end(JSON.stringify(JSON.parse(data)));
+
+                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                    if (nodeTestingServer.config.logsEnabled >= 1) {
+                        console.log(packageName, 'Served back /post JSON from the server to the client');
+                    }
+                    if (nodeTestingServer.config.logsEnabled === 2) {
+                        // Print response time
+                        console.timeEnd('Response time');
+                    }
+
+                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                    if (nodeTestingServer.config.logsEnabled >= 1) {
+                        const spacesToIndent = 4;
+
+                        // Print outcoming response CODE
+                        console.log(`Response: ${res.statusCode}`);
+                        console.log('Response data:', JSON.stringify(JSON.parse(data), null, spacesToIndent));
+                        console.log('========');
+                    }
+
+                    return;
+                });
+            }
+        } else if (req.method === 'GET') {
             if (req.url === '/') {
-                let mainPagePath = path.resolve('public/index.html');
+                const pathFromRoot = path.resolve(__dirname, '../..', 'public/index.html');
+                let mainPagePath;
 
-                res.writeHead(status200, { 'Content-Type': 'text/html' });
-                fs.createReadStream(mainPagePath).pipe(res);
-                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                if (nodeTestingServer.config.logsEnabled >= 1) {
-                    console.log(packageName, `Served ${mainPagePath} from the server to the client`);
-                }
-                if (nodeTestingServer.config.logsEnabled === 2) {
-                    console.timeEnd('Response time');
-                }
+                fs.exists(pathFromRoot, (exists) => {
+                    if (exists) {
+                        mainPagePath = pathFromRoot;
+                    } else {
+                        mainPagePath = path.join(__dirname, 'public/index.html');
+                        console.log(
+                            packageName,
+                            'There is no "public/index.html" in your ' +
+                            'root folder - so serving from ' +
+                            'node_modules/node-testing-server/public/index.html'
+                        );
+                    }
 
-                // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                if (nodeTestingServer.config.logsEnabled >= 1) {
-                    // Print outcoming response CODE
-                    console.log(`Response: ${res.statusCode}`);
-                    console.log('========');
-                }
+                    res.writeHead(status200, { 'Content-Type': 'text/html' });
+                    fs.createReadStream(mainPagePath).pipe(res);
+                    res.end();
+                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                    if (nodeTestingServer.config.logsEnabled >= 1) {
+                        console.log(packageName, `Served ${mainPagePath} from the server to the client`);
+                    }
+                    if (nodeTestingServer.config.logsEnabled === 2) {
+                        console.timeEnd('Response time');
+                    }
+
+                    // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
+                    if (nodeTestingServer.config.logsEnabled >= 1) {
+                        // Print outcoming response CODE
+                        console.log(`Response: ${res.statusCode}`);
+                        console.log('========');
+                    }
+
+                });
 
                 return;
             }
@@ -140,6 +193,7 @@ let nodeTestingServer = {
                     }
                     res.writeHead(status200, { 'Content-Type': contentType });
                     fs.createReadStream(filePath).pipe(res);
+                    res.end();
                     // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                     if (nodeTestingServer.config.logsEnabled >= 1) {
                         // Print outcoming response CODE
