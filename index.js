@@ -76,14 +76,16 @@ let nodeTestingServer = {
             }
         } else if (req.method === 'GET') {
             if (req.url === '/') {
-                const pathFromRoot = path.resolve(__dirname, '../..', 'public/index.html');
-                let mainPagePath;
+                const isCalledExternally = __dirname.includes('node_modules');
+                let mainPagePath = path.join(__dirname, 'public/index.html');
+                const pathFromRoot = isCalledExternally ?
+                    path.resolve(__dirname, '../..', 'public/index.html') :
+                    mainPagePath;
 
                 fs.exists(pathFromRoot, (exists) => {
                     if (exists) {
                         mainPagePath = pathFromRoot;
                     } else {
-                        mainPagePath = path.join(__dirname, 'public/index.html');
                         console.log(
                             packageName,
                             'There is no "public/index.html" in your ' +
