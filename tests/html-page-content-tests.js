@@ -2,6 +2,7 @@
 /* eslint new-cap: 0 */ // --> OFF for Selector
 
 const http = require('http');
+const url = require('url');
 let { nodeTestingServer } = require('../index.js');
 const { Selector } = require('testcafe');
 
@@ -41,7 +42,14 @@ function createRequest (method, requestUrl, bodyString) {
         const spacesToIndent = 4;
 
         // Set options for request
+        const parsedUrl = url.parse(requestUrl);
         const options = {
+            protocol: parsedUrl.protocol,
+            auth: parsedUrl.auth,
+            hostname: parsedUrl.hostname,
+            path: parsedUrl.path,
+            hash: parsedUrl.hash,
+            port: parsedUrl.port,
             method: method,
             headers: {
                 'Content-Type': contentType,
@@ -50,7 +58,7 @@ function createRequest (method, requestUrl, bodyString) {
             }
         };
 
-        const req = http.request(requestUrl, options, (res) => {
+        const req = http.request(options, (res) => {
             let data = '';
 
             console.log(`\nResponse status: ${res.statusCode}`);
