@@ -34,7 +34,7 @@ nodeTestingServer.config = {
  * @param {string} bodyString
  * @returns {Promise} response
  */
-function createRequest (method, requestUrl, bodyString) {
+function createRequest (method, requestUrl, bodyString = '') {
     return new Promise((resolve, reject) => {
         // Check incoming body string to have proper JSON inside of it
         const requestBody = bodyString.length > 0 ? JSON.stringify(JSON.parse(bodyString)) : '';

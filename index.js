@@ -196,20 +196,16 @@ let nodeTestingServer = {
                             res.end(nodeTestingServer.config.pages[fileURL]);
                             // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                             if (nodeTestingServer.config.logsEnabled >= 1) {
+                                // Print outcoming response CODE
+                                console.log(`Response: ${res.statusCode}`);
                                 console.log(packageName, `Generated ${fileURL} from nodeTestingServer.config.pages`);
+                                console.log('========');
                             }
                             if (nodeTestingServer.config.logsEnabled === 2) {
                                 console.log(' ^');
                                 console.log(' |');
                                 console.timeEnd('Response time');
                             }
-                        }
-
-                        // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
-                        if (nodeTestingServer.config.logsEnabled >= 1) {
-                            // Print outcoming response CODE
-                            console.log(`Response: ${res.statusCode}`);
-                            console.log('========');
                         }
 
                         return;
