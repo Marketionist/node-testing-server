@@ -8,8 +8,6 @@ Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for 
 
 ## Supported versions
 [Node.js](http://nodejs.org/):
-- 6.x
-- 7.x
 - 8.x
 - 9.x
 - 10.x
@@ -71,8 +69,60 @@ nodeTestingServer.start();
 nodeTestingServer.stop();
 ```
 
+If you will configure the `/test.html` server page as described in [Importing and configuring](#importing-and-running-with-config-file) section above, and send a `GET` request to `http://localhost:3001/test.html`,
+then the server will return html page with:
+
+```html
+<ul class="items">
+    <li>First</li>
+    <li>Second</li>
+    <li>Third</li>
+    <li>Fourth</li>
+    <li>Fifth</li>
+    <li>Sixth</li>
+    <li>Seventh</li>
+    <li>Eighth</li>
+    <li>Ninth</li>
+    <li>Tenth</li>
+</ul>
+```
+
+There are also 2 default pre-configured pages that you can hit:
+
+1. Sending `GET` request to `http://localhost:3001/` will return:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node testing server - main page</title>
+</head>
+<body>
+    <h1 class="title-main">Main page of node testing server</h1>
+    <p>This page was constructed for testing purposes.</p>
+    <ul>More info about <strong>node-testing-server</strong>:
+        <li><a href="https://github.com/Marketionist/node-testing-server">on Github</a></li>
+        <li><a href="https://www.npmjs.com/package/node-testing-server">on npm</a></li>
+    </ul>
+</body>
+</html>
+```
+
+> Note: if you want to serve your own page from `http://localhost:3001/` - just
+> create it in `public/index.html` in your root folder - otherwise it will be
+> served from `node_modules/node-testing-server/public/index.html`
+
+2. Sending `POST` request to `http://localhost:3001/post` with `{"test1":1,"test2":"Test text"}`
+in the body will return the same JSON that was sent:
+
+```json
+{"test1":1,"test2":"Test text"}
+```
+
 You can see live examples of node-testing-server usage in
-[Protractor tests](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.ts)
+[page-content-tests.js](https://github.com/Marketionist/node-testing-server/blob/master/tests/page-content-tests.js),
+in [Protractor tests](https://github.com/Marketionist/protractor-numerator/blob/master/test/spec.ts)
 and in [TestCafe tests](https://github.com/Marketionist/testcafe-cucumber-steps/blob/master/tests/testing-server.js)
 
 ## Thanks
