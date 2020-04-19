@@ -69,8 +69,10 @@ nodeTestingServer.start();
 nodeTestingServer.stop();
 ```
 
-If you will configure the `/test.html` server page as described in [Importing and configuring](#importing-and-running-with-config-file) section above, and send a `GET` request to `http://localhost:3001/test.html`,
-then the server will return html page with:
+If you will configure the `/test.html` server page as described in
+[Importing and configuring](#importing-and-configuring) section above, and send
+a `GET` request to `http://localhost:3001/test.html`, then the server will
+return html page with:
 
 ```html
 <ul class="items">
