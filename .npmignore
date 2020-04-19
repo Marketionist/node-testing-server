@@ -12,8 +12,10 @@ tests/screenshots
 .*
 !.travis.yml
 !.editorconfig
-!.eslintrc.js
+!.eslintrc.json
 *.xml
 .settings
 downloads
 *~
+.idea
+.vscode
