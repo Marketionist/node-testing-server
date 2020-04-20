@@ -1,6 +1,6 @@
 {
   "name": "node-testing-server",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Simple Node.js server to generate .html, .json, .js, .css, .jpg, .png pages for end-to-end and API testing",
   "main": "index.js",
   "scripts": {
