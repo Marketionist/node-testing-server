@@ -66,7 +66,10 @@ let nodeTestingServer = {
                 req.on('end', () => {
                     const data = Buffer.concat(chunks);
 
-                    res.end(JSON.stringify(JSON.parse(data)));
+                    res.end(
+                        `\nIncoming request headers: ${JSON.stringify(req.headers)}` +
+                        `\nIncoming request body: ${JSON.stringify(JSON.parse(data))}`
+                    );
 
                     // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                     if (nodeTestingServer.config.logsEnabled >= 1) {
@@ -76,7 +79,10 @@ let nodeTestingServer = {
 
                         // Print outcoming response CODE
                         console.log(`\nResponse: ${res.statusCode}`);
-                        console.log('\nResponse data:', JSON.stringify(JSON.parse(data), null, spacesToIndent));
+                        console.log(
+                            '\nResponse data (incoming request body):',
+                            JSON.stringify(JSON.parse(data), null, spacesToIndent)
+                        );
                         console.log('========');
                     }
                     if (nodeTestingServer.config.logsEnabled === 2) {
