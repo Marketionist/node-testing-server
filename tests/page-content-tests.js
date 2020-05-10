@@ -130,14 +130,14 @@ test.page(
 );
 
 test(
-    'should get the post body JSON from the /post server page',
+    'should get the post body string from the /post server page',
     async (t) => {
-        const responseJSON = await createRequest(
+        const response = await createRequest(
             'POST',
             `http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/post`,
             '{ "test1": 1, "test2": "Test text" }'
         );
 
-        await t.expect(JSON.parse(responseJSON).test2).eql('Test text');
+        await t.expect(response).contains('Test text');
     }
 );
