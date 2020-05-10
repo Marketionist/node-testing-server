@@ -117,10 +117,11 @@ There are also 2 default pre-configured pages that you can hit:
 > served from `node_modules/node-testing-server/public/index.html`
 
 2. Sending `POST` request to `http://localhost:3001/post` with `{"test1":1,"test2":"Test text"}`
-in the body will return the same JSON that was sent:
+in the body will return a string with request headers and body:
 
-```json
-{"test1":1,"test2":"Test text"}
+```
+`Incoming request headers: {"content-type":"application/json","connection":"close","content-length":"31","host":"localhost:3001"}
+Incoming request body: {"test1":1,"test2":"Test text"}`
 ```
 
 You can see live examples of node-testing-server usage in
