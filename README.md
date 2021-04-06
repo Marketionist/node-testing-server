@@ -8,8 +8,6 @@ Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for 
 
 ## Supported versions
 [Node.js](http://nodejs.org/):
-- 8.x
-- 9.x
 - 10.x
 - 11.x
 - 12.x
