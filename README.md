@@ -1,6 +1,6 @@
 # node-testing-server
 
-[![Build Status](https://travis-ci.org/Marketionist/node-testing-server.svg?branch=master)](https://travis-ci.org/Marketionist/node-testing-server)
+[![Actions Status](https://github.com/Marketionist/node-testing-server/workflows/Build%20and%20Test/badge.svg)](https://github.com/Marketionist/node-testing-server/actions)
 [![npm version](https://img.shields.io/npm/v/node-testing-server.svg)](https://www.npmjs.com/package/node-testing-server)
 [![NPM License](https://img.shields.io/npm/l/node-testing-server.svg)](https://github.com/Marketionist/node-testing-server/blob/master/LICENSE)
 
