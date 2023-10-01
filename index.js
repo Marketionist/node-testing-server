@@ -273,7 +273,7 @@ let nodeTestingServer = {
 
     stop () {
         return this.server.close(() => {
-            console.log('Stopping server');
+            console.log('Server closed');
         });
     }
 
