@@ -260,15 +260,21 @@ let nodeTestingServer = {
             .on('listening', () => console.log(
                 packageName,
                 `Server running at http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
+            .on('close', () => {
+                console.log(
+                    packageName,
+                    `Server stopped at http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`
+                );
+                // Exit gracefully
+                // process.exit(0);
+            })
             .on('error', (err) => console.log('Error starting server:', err));
     },
 
     stop () {
-        return this.server.close()
-            .on('close', () => console.log(
-                packageName,
-                `Server stopped at http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
-            .on('error', (err) => console.log('Error stopping server:', err));
+        return this.server.close(() => {
+            console.log('Server closed');
+        });
     }
 
 };
