@@ -13,6 +13,12 @@ Simple node.js server to generate .html, .json, .js, .css, .jpg, .png pages for 
 - 12.x
 - 13.x
 - 14.x
+- 15.x
+- 16.x
+- 17.x
+- 18.x
+- 19.x
+- 20.x
 
 ## Installation
 `npm install node-testing-server --save-dev`
@@ -42,7 +48,7 @@ nodeTestingServer.config = {
                         <li>Tenth</li>
                     </ul>`
     }
-}
+};
 ```
 
 By default logs are disabled (`logsEnabled` is set to 0). You can set
@@ -128,5 +134,5 @@ in [Protractor tests](https://github.com/Marketionist/protractor-numerator/blob/
 and in [TestCafe tests](https://github.com/Marketionist/testcafe-cucumber-steps/blob/master/tests/testing-server.js)
 
 ## Thanks
-If this script was helpful to you, please give it a **★ Star**
-on [Github](https://github.com/Marketionist/node-testing-server)
+If this package was helpful to you, please give it a **★ Star**
+on [GitHub](https://github.com/Marketionist/node-testing-server)
