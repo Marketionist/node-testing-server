@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/Marketionist/node-testing-server#readme",
   "devDependencies": {
-    "eslint": "^7.23.0",
-    "testcafe": "^1.13.0"
+    "eslint": "^8.50.0",
+    "testcafe": "^3.3.0"
   }
 }
