@@ -279,4 +279,4 @@ let nodeTestingServer = {
 
 };
 
-exports.nodeTestingServer = nodeTestingServer;
+module.exports.nodeTestingServer = nodeTestingServer;
