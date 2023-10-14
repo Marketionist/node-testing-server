@@ -208,7 +208,8 @@ let nodeTestingServer = {
                             if (nodeTestingServer.config.logsEnabled >= 1) {
                                 // Print outcoming response CODE
                                 console.log(`\nResponse status code: ${res.statusCode}`);
-                                console.log(`\n${packageName} Generated ${fileURL} from nodeTestingServer.config.pages`);
+                                console.log(`\n${packageName} Generated ${fileURL}` +
+                                    'from nodeTestingServer.config.pages');
                                 console.log(`\nResponse data: ${pageBody}`);
                                 console.log('========');
                             }
@@ -221,7 +222,10 @@ let nodeTestingServer = {
 
                         return;
                     }
-                    res.writeHead(status200, { 'Content-Type': contentType, 'Connection': 'close' });
+                    res.writeHead(
+                        status200,
+                        { 'Content-Type': contentType, 'Connection': 'close' }
+                    );
 
                     let stream = fs.createReadStream(filePath);
 
@@ -248,7 +252,10 @@ let nodeTestingServer = {
                 });
             }
         } else {
-            res.writeHead(status404, { 'Content-Type': 'text/html', 'Connection': 'close' });
+            res.writeHead(
+                status404,
+                { 'Content-Type': 'text/html', 'Connection': 'close' }
+            );
             res.end(`<h1>Error 404: ${req.method} is not supported</h1>`);
 
             // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
@@ -261,7 +268,10 @@ let nodeTestingServer = {
     }),
 
     start () {
-        return this.server.listen(nodeTestingServer.config.port, nodeTestingServer.config.hostname)
+        return this.server.listen(
+            nodeTestingServer.config.port,
+            nodeTestingServer.config.hostname
+        )
             .on('listening', () => console.log(
                 packageName,
                 `Server running at http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`))
