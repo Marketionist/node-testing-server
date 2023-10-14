@@ -78,7 +78,7 @@ let nodeTestingServer = {
                         console.log(packageName, 'Served back /post body JSON from the server to the client');
 
                         // Print outcoming response CODE
-                        console.log(`\nResponse: ${res.statusCode}`);
+                        console.log(`\nResponse status code: ${res.statusCode}`);
                         console.log(
                             '\nResponse data (incoming request body):',
                             JSON.stringify(JSON.parse(data), null, spacesToIndent)
@@ -125,7 +125,7 @@ let nodeTestingServer = {
                         // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                         if (nodeTestingServer.config.logsEnabled >= 1) {
                             // Print outcoming response CODE
-                            console.log(`\nResponse: ${res.statusCode}`);
+                            console.log(`\nResponse status code: ${res.statusCode}`);
                             console.log(packageName, `Served ${mainPagePath} from the server to the client`);
                             console.log('\nResponse data:', data);
                             console.log('========');
@@ -179,32 +179,37 @@ let nodeTestingServer = {
             }
 
             if (supportedFileExtensions.indexOf(fileExtension) === -1) {
-                res.writeHead(status404, { 'Content-Type': 'text/html' });
+                res.writeHead(status404, { 'Content-Type': 'text/html', 'Connection': 'close' });
                 res.end(`<h1>Error 404: ${fileExtension} is not among supported file formats:
                     ${supportedFileExtensions.join(', ')}</h1>`);
 
                 // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                 if (nodeTestingServer.config.logsEnabled >= 1) {
                     // Print outcoming response CODE
-                    console.log(`Response: ${res.statusCode}`);
+                    console.log(`Response status code: ${res.statusCode}`);
                     console.log('========');
                 }
             } else {
                 fs.exists(filePath, (exists) => {
                     if (!exists) {
                         if (typeof nodeTestingServer.config.pages[fileURL] === 'undefined') {
-                            res.writeHead(status404, { 'Content-Type': 'text/html' });
+                            res.writeHead(status404, { 'Content-Type': 'text/html', 'Connection': 'close' });
                             res.end(`<h1>Error 404: ${fileURL} is not set in nodeTestingServer.config.pages</h1>`);
                         } else {
                             // If requested page cannot be found in public/ folder,
                             // then it will be generated from nodeTestingServer.config.pages
-                            res.writeHead(status200, { 'Content-Type': contentType });
-                            res.end(nodeTestingServer.config.pages[fileURL]);
+                            const pageStatusCode = nodeTestingServer.config.pages[fileURL].pageStatusCode || status200;
+                            const pageBody = nodeTestingServer.config.pages[fileURL].pageBody ||
+                                nodeTestingServer.config.pages[fileURL];
+
+                            res.writeHead(pageStatusCode, { 'Content-Type': contentType, 'Connection': 'close' });
+                            res.end(pageBody);
                             // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                             if (nodeTestingServer.config.logsEnabled >= 1) {
                                 // Print outcoming response CODE
-                                console.log(`Response: ${res.statusCode}`);
-                                console.log(packageName, `Generated ${fileURL} from nodeTestingServer.config.pages`);
+                                console.log(`\nResponse status code: ${res.statusCode}`);
+                                console.log(`\n${packageName} Generated ${fileURL} from nodeTestingServer.config.pages`);
+                                console.log(`\nResponse data: ${pageBody}`);
                                 console.log('========');
                             }
                             if (nodeTestingServer.config.logsEnabled === 2) {
@@ -216,7 +221,7 @@ let nodeTestingServer = {
 
                         return;
                     }
-                    res.writeHead(status200, { 'Content-Type': contentType });
+                    res.writeHead(status200, { 'Content-Type': contentType, 'Connection': 'close' });
 
                     let stream = fs.createReadStream(filePath);
 
@@ -226,7 +231,7 @@ let nodeTestingServer = {
                         // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
                         if (nodeTestingServer.config.logsEnabled >= 1) {
                             // Print outcoming response CODE
-                            console.log(`\nResponse: ${res.statusCode}`);
+                            console.log(`\nResponse status code: ${res.statusCode}`);
                             console.log(packageName, `Served ${filePath} from the server to the client`);
                             console.log('\nResponse data:', data);
                             console.log('========');
@@ -243,13 +248,13 @@ let nodeTestingServer = {
                 });
             }
         } else {
-            res.writeHead(status404, { 'Content-Type': 'text/html' });
+            res.writeHead(status404, { 'Content-Type': 'text/html', 'Connection': 'close' });
             res.end(`<h1>Error 404: ${req.method} is not supported</h1>`);
 
             // Show logs if they are enabled in nodeTestingServer.config.logsEnabled
             if (nodeTestingServer.config.logsEnabled >= 1) {
                 // Print outcoming response CODE
-                console.log(`Response: ${res.statusCode}`);
+                console.log(`Response status code: ${res.statusCode}`);
                 console.log('========');
             }
         }
