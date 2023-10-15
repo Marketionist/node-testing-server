@@ -23,7 +23,22 @@ nodeTestingServer.config = {
                         <li>Eighth</li>
                         <li>Ninth</li>
                         <li>Tenth</li>
-                    </ul>`
+                    </ul>`,
+        '/test-status-code.html': {
+            pageStatusCode: 201,
+            pageBody: `<ul class="items">
+                            <li>First</li>
+                            <li>Second</li>
+                            <li>Third</li>
+                            <li>Fourth</li>
+                            <li>Fifth</li>
+                            <li>Sixth</li>
+                            <li>Seventh</li>
+                            <li>Eighth</li>
+                            <li>Ninth</li>
+                            <li>Tenth</li>
+                        </ul>`
+        }
     }
 };
 
@@ -34,7 +49,7 @@ nodeTestingServer.config = {
  * @param {string} bodyString
  * @returns {Promise} response
  */
-function createRequest (method, requestUrl, bodyString = '') {
+function sendRequest (method, requestUrl, bodyString = '') {
     return new Promise((resolve, reject) => {
         // Check incoming body string to have proper JSON inside of it
         const requestBody = bodyString.length > 0 ? JSON.stringify(JSON.parse(bodyString)) : '';
@@ -75,7 +90,10 @@ function createRequest (method, requestUrl, bodyString = '') {
 
                 console.log(`\nResponse body: ${response}`);
                 // Resolve after response was finished and all data from response was accumulated
-                resolve(data);
+                resolve({
+                    statusCode: res.statusCode,
+                    body: response
+                });
             });
         });
 
@@ -106,7 +124,8 @@ fixture(
 });
 
 test.page(
-    `http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/`
+    `http://${nodeTestingServer.config.hostname}` +
+        `:${nodeTestingServer.config.port}/`
 )(
     'should get the h1 text from the /index.html main test server page',
     async (t) => {
@@ -132,12 +151,26 @@ test.page(
 test(
     'should get the post body string from the /post server page',
     async (t) => {
-        const response = await createRequest(
+        const response = await sendRequest(
             'POST',
-            `http://${nodeTestingServer.config.hostname}:${nodeTestingServer.config.port}/post`,
+            `http://${nodeTestingServer.config.hostname}` +
+                `:${nodeTestingServer.config.port}/post`,
             '{ "test1": 1, "test2": "Test text" }'
         );
 
-        await t.expect(response).contains('Test text');
+        await t.expect(response.body).contains('Test text');
+    }
+);
+
+test(
+    'should get the 201 status code from the /test-status-code.html server page',
+    async (t) => {
+        const response = await sendRequest(
+            'GET',
+            `http://${nodeTestingServer.config.hostname}` +
+                `:${nodeTestingServer.config.port}/test-status-code.html`
+        );
+
+        await t.expect(response.statusCode === 201).ok();
     }
 );
