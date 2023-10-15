@@ -165,12 +165,13 @@ test(
 test(
     'should get the 201 status code from the /test-status-code.html server page',
     async (t) => {
+        const status201 = 201;
         const response = await sendRequest(
             'GET',
             `http://${nodeTestingServer.config.hostname}` +
                 `:${nodeTestingServer.config.port}/test-status-code.html`
         );
 
-        await t.expect(response.statusCode === 201).ok();
+        await t.expect(response.statusCode === status201).ok();
     }
 );
