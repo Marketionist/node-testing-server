@@ -51,6 +51,36 @@ nodeTestingServer.config = {
 };
 ```
 
+Also if you want to specify a status code that will be returned by the page:
+
+```javascript
+let { nodeTestingServer } = require('node-testing-server');
+
+// Settings for node testing server
+nodeTestingServer.config = {
+    hostname: 'localhost',
+    port: 3001,
+    logsEnabled: 0,
+    pages: {
+        '/test.html': {
+            pageStatusCode: 201,
+            pageBody: `<ul class="items">
+                        <li>First</li>
+                        <li>Second</li>
+                        <li>Third</li>
+                        <li>Fourth</li>
+                        <li>Fifth</li>
+                        <li>Sixth</li>
+                        <li>Seventh</li>
+                        <li>Eighth</li>
+                        <li>Ninth</li>
+                        <li>Tenth</li>
+                    </ul>`
+        }
+    }
+};
+```
+
 By default logs are disabled (`logsEnabled` is set to 0). You can set
 `logsEnabled` config to one of 3 levels:
 - 0 - logs disabled
