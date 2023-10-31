@@ -4,7 +4,7 @@
   "description": "Simple Node.js server to generate .html, .json, .js, .css, .jpg, .png pages for end-to-end and API testing",
   "main": "index.js",
   "scripts": {
-    "lint": "node_modules/.bin/eslint *.js *.js tests/**/*.js",
+    "lint": "node ./node_modules/.bin/eslint *.js tests/**/*.js",
     "test": "node_modules/.bin/testcafe 'chrome:headless'",
     "patch": "npm version patch -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish",
     "minor": "npm version minor -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish",
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/Marketionist/node-testing-server#readme",
   "devDependencies": {
-    "eslint": "^8.50.0",
+    "eslint": "^8.52.0",
     "testcafe": "^3.3.0"
   }
 }
